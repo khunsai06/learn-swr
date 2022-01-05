@@ -14,7 +14,7 @@ const Nav = () => {
          <NavItem to="/" linkText="Parallel & Depended" />
          <NavItem to="/" linkText="Dynamic" />
          <NavItem to="/pagination" linkText="Pagination" />
-         <NavItem to="/" linkText="Infinite" />
+         <NavItem to="/infinite" linkText="Infinite" />
          <NavItem to="/" linkText="Placeholder" />
          <NavItem to="/" linkText="Initialize" />
          <NavItem to="/mutation" linkText="Mutation" />

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import { usePeoples, usePlanets } from './hooks/use-users';
 import MutationQueries from './pages/mutation';
 import PaginationQueries from './pages/pagination';
+import InfiniteQueries from './pages/infintie';
 
 function App() {
    return (
@@ -12,6 +13,7 @@ function App() {
          <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/pagination" element={<PaginationQueries />}></Route>
+            <Route path="/infinite" element={<InfiniteQueries />}></Route>
             <Route path="/mutation" element={<MutationQueries />}></Route>
          </Routes>
       </BrowserRouter>

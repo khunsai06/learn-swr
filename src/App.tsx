@@ -1,45 +1,62 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import { usePeoples, usePlanets } from './hooks/use-users';
+import MutationQueries from './pages/mutation';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+   return (
+      <BrowserRouter>
+         <Navbar />
+         <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/mutation" element={<MutationQueries />}></Route>
+         </Routes>
+      </BrowserRouter>
+   );
 }
 
-export default App
+const Home = () => {
+   const { data: peoples, error: peoplesError } = usePeoples();
+   const {
+      data: planets,
+      error: planetsError,
+      isValidating,
+   } = usePlanets(!!peoples);
+
+   return (
+      <main>
+         <h1>Normal Queries</h1>
+         <h4>peoples</h4>
+         <ul>
+            {!peoplesError && !peoples ? (
+               <p>loading...</p>
+            ) : (
+               peoples?.results.map((user: any, index: number) => {
+                  return (
+                     <li key={index} className="list-item">
+                        {user.name}
+                     </li>
+                  );
+               })
+            )}
+         </ul>
+         <h4>planets</h4>
+         <ul>
+            {isValidating && !planetsError && !planets ? (
+               <p>loading...</p>
+            ) : (
+               planets?.results.map((user: any, index: number) => {
+                  return (
+                     <li key={index} className="list-item">
+                        {user.name}
+                     </li>
+                  );
+               })
+            )}
+         </ul>
+      </main>
+   );
+};
+
+export default App;

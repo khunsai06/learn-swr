@@ -32,14 +32,20 @@ const MutationQueries = () => {
                   onSubmit={async (event) => {
                      event.preventDefault();
                      const title = (event.target as any)[0].value;
-                     await fetch(urlKey, {
-                        method: 'POST',
-                        headers: {
-                           'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ title }),
-                     });
-                     await mutate();
+                     // * mutate with post request
+                     // * cached todos + responded todo
+                     await mutate(async (todos: any[]) => {
+                        const res = await fetch(urlKey, {
+                           method: 'POST',
+                           headers: {
+                              'Content-Type': 'application/json',
+                           },
+                           body: JSON.stringify({ title }),
+                        });
+                        const updatedTodo = await res.json();
+                        const newTodoList = [...todos, updatedTodo];
+                        return newTodoList;
+                     }, false);
                   }}
                >
                   <div className="">

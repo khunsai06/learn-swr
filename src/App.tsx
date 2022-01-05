@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { usePeoples, usePlanets } from './hooks/use-users';
 import MutationQueries from './pages/mutation';
+import PaginationQueries from './pages/pagination';
 
 function App() {
    return (
@@ -10,6 +11,7 @@ function App() {
          <Navbar />
          <Routes>
             <Route path="/" element={<Home />}></Route>
+            <Route path="/pagination" element={<PaginationQueries />}></Route>
             <Route path="/mutation" element={<MutationQueries />}></Route>
          </Routes>
       </BrowserRouter>

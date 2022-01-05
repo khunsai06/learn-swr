@@ -13,7 +13,7 @@ const Nav = () => {
       <ul>
          <NavItem to="/" linkText="Parallel & Depended" />
          <NavItem to="/" linkText="Dynamic" />
-         <NavItem to="/" linkText="Pagination" />
+         <NavItem to="/pagination" linkText="Pagination" />
          <NavItem to="/" linkText="Infinite" />
          <NavItem to="/" linkText="Placeholder" />
          <NavItem to="/" linkText="Initialize" />

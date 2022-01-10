@@ -3,6 +3,8 @@ import { useInfinitePosts } from '../../hooks/use-posts';
 
 const InfiniteQueries = () => {
    const { data, size, setSize, isValidating } = useInfinitePosts();
+   // console.log('size', size);
+
    return (
       <main>
          <h1>Infinite Queries</h1>

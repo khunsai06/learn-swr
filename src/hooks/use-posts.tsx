@@ -13,9 +13,9 @@ export const usePosts = (pageIndex: number, limit: number) => {
 export const useInfinitePosts = () => {
    const _ = useSWRInfinite(
       (pageIndex, previousPageData) => {
-         console.log('pageIndex', pageIndex);
+         // console.log('pageIndex', pageIndex);
          console.log('previousPageData', previousPageData);
-
+         // stop next fetch
          if (previousPageData && !previousPageData.length) return null;
          const query = `_page=${pageIndex}&_limit=1`;
          const urlKey = `https://jsonplaceholder.typicode.com/posts?${query}`;

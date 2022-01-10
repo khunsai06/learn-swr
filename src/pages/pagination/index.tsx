@@ -16,6 +16,7 @@ const PaginationQueries = () => {
             >
                Previous
             </button>
+            <button disabled={true}>{pageIndex}</button>
             <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
          </div>
       </main>
@@ -23,23 +24,24 @@ const PaginationQueries = () => {
 };
 
 const Page = ({ pageIndex }: { pageIndex: number }) => {
-   const { data: posts, error: postsError, isValidating } = usePosts(pageIndex);
+   const { data: posts, error: postsError } = usePosts(pageIndex, 4);
+   // * use previous data before new data arrive
+   const postsRef = React.useRef();
+   if (posts) postsRef.current = posts;
+   const _posts = postsRef.current;
+
    return (
       <div className="card-group">
-         {!postsError && !posts ? (
-            <p>loading...</p>
-         ) : (
-            posts?.map((post: any, index: number) => {
-               return (
-                  <div className="card" key={index}>
-                     <div className="card-body">
-                        <h4>{post.title}</h4>
-                        <p>{post.body}</p>
-                     </div>
+         {(_posts as any)?.map((post: any, index: number) => {
+            return (
+               <div className="card" key={index}>
+                  <div className="card-body">
+                     <h4>{post.title}</h4>
+                     <p>{post.body}</p>
                   </div>
-               );
-            })
-         )}
+               </div>
+            );
+         })}
       </div>
    );
 };

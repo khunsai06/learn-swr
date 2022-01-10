@@ -1,45 +1,42 @@
 import React from 'react';
-import { usePosts } from '../../hooks/use-posts';
+import { useInfinitePosts } from '../../hooks/use-posts';
 
 const InfiniteQueries = () => {
-   const [pageIndex, setPageIndex] = React.useState(1);
-   const pages: JSX.Element[] = [];
-   for (let i = 0; i < pageIndex; i++) {
-      pages.push(<Page pageIndex={pageIndex} key={i} />);
-   }
-
+   const { data, size, setSize, isValidating } = useInfinitePosts();
    return (
       <main>
          <h1>Infinite Queries</h1>
          <h4>posts</h4>
-         {pages}
+         {data?.map((posts, index) => {
+            return <Pages posts={posts} key={index} />;
+         })}
          <div className="">
-            <button onClick={() => setPageIndex(pageIndex + 1)}>
-               Load More
+            <button
+               onClick={() => {
+                  setSize(size + 1);
+               }}
+               disabled={isValidating}
+            >
+               {isValidating ? 'Loading...' : 'Load More'}
             </button>
          </div>
       </main>
    );
 };
 
-const Page = ({ pageIndex }: { pageIndex: number }) => {
-   const { data: posts, error: postsError, isValidating } = usePosts(pageIndex);
+const Pages = ({ posts }: { posts: any[] }) => {
    return (
       <div className="card-group">
-         {!postsError && !posts ? (
-            <p>loading...</p>
-         ) : (
-            posts?.map((post: any, index: number) => {
-               return (
-                  <div className="card" key={index}>
-                     <div className="card-body">
-                        <h4>{post.title}</h4>
-                        <p>{post.body}</p>
-                     </div>
+         {posts?.map((post: any, index: number) => {
+            return (
+               <div className="card" key={index}>
+                  <div className="card-body">
+                     <h4>{post.title}</h4>
+                     <p>{post.body}</p>
                   </div>
-               );
-            })
-         )}
+               </div>
+            );
+         })}
       </div>
    );
 };
